@@ -3,10 +3,42 @@ document.addEventListener("DOMContentLoaded", function () {
   startButton.addEventListener("click", function () {
     console.log("start");
 
-		const modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modalContent");
     const controlButton = document.getElementById("controlButton");
-		const modalImage = document.getElementById("modalImage");
-		controlButton.style.display = "block";
+    const greenButton = document.getElementById("greenButton");
+    const yellowButton = document.getElementById("yellowButton");
+    const redButton = document.getElementById("redButton");
+    const modalImage = document.getElementById("modalImage");
+    controlButton.style.display = "block";
+
+    let modalToggle = false;
+
+    function modalChangeSize() {
+      if (modalToggle) {
+        modalToggle = false;
+        modalContent.style.color = ""
+        modal.style.width = "";
+        modal.style.height = "";
+        modal.style.maxWidth = "";
+        modal.style.top = "";
+        modal.style.left = "";
+        modal.style.position = "";
+        modal.style.backgroundColor = "";
+
+      } else {
+        modalToggle = true;
+        modalContent.style.color = "white"
+        modal.style.width = "100%";
+        modal.style.height = "100%";
+        modal.style.maxWidth = "80%";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.position = "fixed";
+        modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+      }
+    }
+    greenButton.addEventListener("click", modalChangeSize);
 
     // モーダルウィンドウの開閉を制御する関数
     function toggleModal() {
@@ -14,24 +46,19 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.style.display = "none";
         controlButton.textContent = "開く";
       } else {
-				modalImage.src = "static/images/pai.gif";
+        modalImage.src = "static/images/pai.gif";
         modal.style.display = "block";
         controlButton.textContent = "閉じる";
       }
     }
-		toggleModal();
-
-    // ボタンのクリックイベントでモーダルウィンドウの開閉を制御する
+    toggleModal();
     controlButton.addEventListener("click", toggleModal);
+    yellowButton.addEventListener("click", toggleModal);
+    redButton.addEventListener("click", toggleModal);
 
-    const shoupaiElement = document.querySelector(".shoupai");
     handleShoupaiDisplayed();
-
     function handleShoupaiDisplayed() {
-      // 表示された時の処理をここに記述する
-      console.log("要素が表示されました");
       setInterval(function () {
-        // 5秒ごとに実行したい処理をここに記述する
         console.log("----------------------");
         const bingpaiElement = document.querySelector(".bingpai");
         const paiElements = bingpaiElement.querySelectorAll(".pai");
@@ -43,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (dataPaiValues.length == 14) {
-					console.log(dataPaiValues);
+          console.log(dataPaiValues);
           const data = { dataPai: dataPaiValues };
           const csrftoken = document.querySelector(
             "[name=csrfmiddlewaretoken]"
@@ -60,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((result) => {
               console.log(result);
-							modalImage.src = "static/images/"+ result["result"] + ".gif";
+              modalImage.src = "static/images/" + result.result + ".gif";
             })
             .catch((error) => console.error("リクエスト失敗", error));
         }
