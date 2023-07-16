@@ -38,6 +38,7 @@
       type="text/css"
       href="{% static 'css/modalWindow.css' %}"
     />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script
       type="text/javascript"
       src="{% static 'scripts/majiang-2.1.1.js' %}"
@@ -422,6 +423,11 @@
       </div>
       <div class="modal-image-container">
         <img id="modalImage" class="modal-image" alt="予測画像" />
+      </div>
+      <div class="charts" id="charts">
+        <div id="leftChart" class="chart"></div>
+        <div id="centerChart" class="chart"></div>
+        <div id="rightChart" class="chart"></div>
       </div>
     </div>
     <button id="controlButton" class="control-button">開く</button>

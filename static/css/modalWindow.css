@@ -82,3 +82,13 @@
 .green {
   background-color: #00ca4e;
 }
+
+.charts {
+  display: none;
+}
+
+.chart {
+  flex: 1; /* グラフを均等に配置するためにflex: 1を設定 */
+  height: 300px; /* グラフの高さを指定（適宜調整してください） */
+  margin: 5px; /* グラフの間の余白を指定（適宜調整してください） */
+}
