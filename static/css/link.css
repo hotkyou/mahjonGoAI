@@ -1,0 +1,11 @@
+a.custom-link {
+  color: #fff; /* テキストカラーを白に設定 */
+  text-decoration: none; /* 下線を消す */
+  font-weight: bold; /* テキストを太字にする */
+}
+
+/* マウスオーバー時のスタイル */
+a.custom-link:hover {
+  text-decoration: underline; /* マウスオーバー時に下線を表示 */
+  color: #ff9800; /* マウスオーバー時のテキストカラーをオレンジに設定 */
+}

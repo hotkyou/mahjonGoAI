@@ -7,12 +7,12 @@
 
     <meta name="viewport" content="width=800" />
     <title>電脳麻将</title>
-    <meta name="description" content="HTML5 + Javascriptで動作する麻雀アプリ" />
+    <meta name="description" content="Djangoで麻雀をAIでサポートするサイト" />
     <meta name="twitter:card" content="summary" />
-    <meta property="og:title" content="電脳麻将" />
+    <meta property="og:title" content="mahjanGoAI" />
     <meta
       property="og:description"
-      content="HTML5 + JavaScript で動作する麻雀アプリ"
+      content="Djangoで麻雀をAIでサポートするサイト"
     />
     <meta
       property="og:image"
@@ -38,6 +38,7 @@
       type="text/css"
       href="{% static 'css/modalWindow.css' %}"
     />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/link.css' %}" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script
       type="text/javascript"
@@ -677,6 +678,11 @@
         <a><img src="{% static 'images/icon-download-alt.png' %}" />牌譜保存</a>
       </div>
     </div>
-    <div class="version">ver. 2.1.1</div>
+    <a
+      href="https://github.com/hotkyou/mahjonGoAI"
+      target="_blank"
+      class="custom-link version"
+      >GitHub
+    </a>
   </body>
 </html>
