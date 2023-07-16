@@ -2,7 +2,7 @@
 
 Djangoで動かす麻雀AIサイト
 
-[DEMO(デプロイ調整中)]()
+[DEMO](https://mahjongai.pythonanywhere.com)
 
 ## Features
 
