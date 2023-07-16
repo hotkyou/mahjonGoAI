@@ -95,7 +95,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const dataPaiValues = [];
 
       paiElements.forEach((paiElement) => {
-        const dataPaiValue = paiElement.getAttribute("data-pai");
+        let dataPaiValue = paiElement.getAttribute("data-pai");
+        if (dataPaiValue == "m0") {
+          dataPaiValue = "m5";
+        } else if (dataPaiValue == "p0") {
+          dataPaiValue = "p5";
+        } else if (dataPaiValue == "s0") {
+          dataPaiValue = "s5";
+        }
         dataPaiValues.push(dataPaiValue);
       });
 
