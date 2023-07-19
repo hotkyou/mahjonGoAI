@@ -10,7 +10,15 @@ Djangoで動かす麻雀AIサイト
 
 ## Installation
 
-記述中...
+1. anacondaの仮想環境を構築する
+```
+conda env create -f conda.yml
+```
+
+2. Django Serverを起動する
+```
+python manage.py runserver
+```
 
 ## License
 
