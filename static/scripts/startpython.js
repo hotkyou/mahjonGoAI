@@ -89,6 +89,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleShoupaiDisplayed() {
     setInterval(function () {
+
+      // 捨て牌取得
+      // クラスごとに要素を格納するオブジェクトを初期化
+      var elementsByClass = {};
+      // 指定された親クラスを持つ要素を取得
+      var parentElements = document.querySelectorAll('.he.shangjia');
+      // NodeListをイテレートし、各親要素の下にある"pai"クラスを持つ子要素を取得
+      parentElements.forEach(function (parentElement) {
+          var paiElementss = parentElement.querySelectorAll('.pai[data-pai]');
+          console.log(paiElementss);
+      });
+      // 整理された要素をコンソールに表示
+      console.log(elementsByClass);
+
+
+
       console.log("----------------------");
       const bingpaiElement = document.querySelector(".bingpai");
       const paiElements = bingpaiElement.querySelectorAll(".pai");
