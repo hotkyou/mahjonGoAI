@@ -1,0 +1,31 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/link.css' %}" />
+<div class="topnav">
+  <a href="/">Home</a>
+  <a id="controlButton" class="control-button"></a>
+</div>
+<div class="flex-container">
+  <div class="content-container">
+    <div class="form-container">
+      <form action="/login" method="POST">
+        {% csrf_token %}
+        <h1>
+          登録とログイン
+        </h1>
+        <br>
+        <br>
+        <span class="subtitle">USERNAME:</span>
+        <br>
+        <input type="text" name="username">
+        <br>
+        <span class="subtitle">PASSWORD:</span>
+        <br>
+        <input type="password" name="password">
+        <div class="error">{{error}}</div>
+        <br>
+        <input type="submit" value="SUBMIT" class="submit-btn">
+      </form>
+    </div>
+  </div>
+</div>

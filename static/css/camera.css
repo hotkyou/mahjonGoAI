@@ -1,0 +1,36 @@
+.screen {
+  background-color: #111218;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.screen .div {
+  background-color: #111218;
+  width: 1440px;
+  height: 800px;
+  position: relative;
+}
+
+.screen .rectangle {
+  position: absolute;
+  width: 1280px;
+  height: 720px;
+  top: 120px;
+  left: 120px;
+  background-color: #d9d9d9;
+}
+
+.screen .text-wrapper {
+  position: absolute;
+  width: 1200px;
+  left: 120px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 90px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}

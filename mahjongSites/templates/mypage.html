@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/mypage.css' %}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+    <script src="{% static 'scripts/mypage.js' %}"></script>
+  </head>
+  <body>
+    <div class="desktop">
+      <div class="div">
+        <div class="overlap-group">
+          <div class="overlap-item" id="home-button"><a href='/'></a></div>
+          <div class="overlap-item" id="user-button"><a href='/auth'></a></div>
+          <div class="overlap-item" id="setting-button"><a ref='example'></a></div>
+        </div>
+        <div class="overlap"><div class="text-wrapper">DashBoard</div></div>
+        <div class="rectangle">
+          <div>
+            {% comment %} <img class="image-rec" src="{% static 'images/icon.jpg' %}" width="50%" height="50%" /> {% endcomment %}
+            <img class="image-rec" src="{% static 'images/pamo.jpeg' %}" width="50%" height="50%" />
+            <span class="username-rec">麻雀先生</span>
+          </div>
+        </div>
+        <div class="rectangle-2">
+          <div class="box">
+            <div class="rec">
+              <div class="view">
+                <div class="div-view">Avg Rank</div>
+                <div class="text-wrapper-2">1.23</div>
+                <div class="overlap-group2">
+                  <div class="text-wrapper-3">1%</div>
+                  <canvas class="rec2chart" id="avgrank"></canvas>
+                </div>
+              </div>
+              <div class="score">
+                <div class="div-view">Score</div>
+                <div class="text-wrapper-2">+32.1</div>
+                <div class="overlap-group2">
+                  <div class="text-wrapper-3">33%</div>
+                  <canvas class="rec2chart" id="score"></canvas>
+                </div>
+              </div>
+              <div class="score-2">
+                <div class="div-view">Avg Score</div>
+                <div class="text-wrapper-2">6789</div>
+                <div class="overlap-group2">
+                  <div class="text-wrapper-3">72%</div>
+                  <canvas class="rec2chart" id="rank"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rectangle-3">
+          <div class="label"><div class="text-wrapper-4">History Rank</div></div>
+          <div class="r3chartdiv">
+            <canvas class="rec3chart" id="history"></canvas>
+          </div>
+        </div>
+        <div class="rectangle-4"></div>
+        <div class="rectangle-5">
+          <div class="rec6-child">
+            <div class="rec6-space"></div>
+            <div class="match-details">Match Details</div>
+            <div class="match-group">
+              <div class="match-title">一位率</div>
+              <div class="match-title">二位率</div>
+              <div class="match-title">三位率</div>
+              <div class="match-title">四位率</div>
+              <div class="match-title">飛び率</div>
+              <div class="match-data">25.00%　</div>
+              <div class="match-data">17.86%　</div>
+              <div class="match-data">25.00%　</div>
+              <div class="match-data">32.14%　</div>
+              <div class="match-data">3.57%　</div>
+              <div class="match-title">対戦数</div>
+              <div class="match-title">平均和了</div>
+              <div class="match-title">平均順位</div>
+              <div class="match-title">最大連荘</div>
+              <div class="match-title">和了巡数</div>
+              <div class="match-data">28　</div>
+              <div class="match-data">5678　</div>
+              <div class="match-data">2.64　</div>
+              <div class="match-data">4　</div>
+              <div class="match-data">11.77　</div>
+              <div class="match-title">和了率</div>
+              <div class="match-title">ツモ率</div>
+              <div class="match-title">放銃率</div>
+              <div class="match-title">副露率</div>
+              <div class="match-title">立直率</div>
+              <div class="match-data">19.35%　</div>
+              <div class="match-data">30.00%　</div>
+              <div class="match-data">16.77%　</div>
+              <div class="match-data">30.97%　</div>
+              <div class="match-data">27.74%　</div>
+            </div>
+          </div>
+        </div>
+        <div class="rectangle-6"></div>
+      </div>
+    </div>
+  </body>
+</html>

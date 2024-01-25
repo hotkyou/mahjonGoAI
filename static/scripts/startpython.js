@@ -89,10 +89,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleShoupaiDisplayed() {
     setInterval(function () {
-      console.log("----------------------");
+
       const bingpaiElement = document.querySelector(".bingpai");
       const paiElements = bingpaiElement.querySelectorAll(".pai");
+      const doraElement = document.querySelector(".baopai");
+      const doraElements = doraElement.querySelectorAll(".pai");
+      const tileElement = document.querySelector('span.paishu');
+      const tile = tileElement.textContent;
+      const bakaze = document.querySelector('.jushu').textContent;
+      const changban = document.querySelector('span.changbang').textContent;
+      const lizhiban = document.querySelector('span.lizhibang').textContent;
+
+      //点数状況
+      const main = document.querySelector('.defen .main.lunban');
+      const xiajia = document.querySelector('.defen .xiajia');
+      const duimian = document.querySelector('.defen .duimian');
+      const shangjia = document.querySelector('.defen .shangjia');
+
+      //捨て牌
+      const mainDiscard = document.querySelectorAll('.he.main .dapai .pai');
+      const xiajiaDiscard = document.querySelectorAll('.he.xiajia .dapai .pai');
+      const duimianDiscard = document.querySelectorAll('.he.duimian .dapai .pai');
+      const shangjiaDiscard = document.querySelectorAll('.he.shangjia .dapai .pai');
+
+      //リーチ
+      const mainReach = document.querySelector('.he.main .lizhi .chouma');
+      const xiajiaReach = document.querySelector('.he.xiajia .lizhi .chouma');
+      const duimianReach = document.querySelector('.he.duimian .lizhi .chouma');
+      const shangjiaReach = document.querySelector('.he.shangjia .lizhi .chouma');
+
       const dataPaiValues = [];
+      const doraValues = [];
+      const maindiscardValues = [];
+      const leftdiscardValues = [];
+      const rightdiscardValues = [];
+      const straightdiscardValues = [];
+      const reachValues = [0, 0, 0, 0];
+
+      mainDiscard.forEach((mainDiscardElement) => {
+        mainDiscardElements = mainDiscardElement.getAttribute('data-pai');
+        maindiscardValues.push(mainDiscardElements);
+      });
+
+      xiajiaDiscard.forEach((xiajiaDiscardElement) => {
+        xiajiaDiscardElements = xiajiaDiscardElement.getAttribute('data-pai');
+        rightdiscardValues.push(xiajiaDiscardElements);
+      });
+
+      duimianDiscard.forEach((duimianDiscardElement) => {
+        duimianDiscardElements = duimianDiscardElement.getAttribute('data-pai');
+        straightdiscardValues.push(duimianDiscardElements);
+      });
+
+      shangjiaDiscard.forEach((shangjiaDiscardElement) => {
+        shangjiaDiscardElements = shangjiaDiscardElement.getAttribute('data-pai');
+        leftdiscardValues.push(shangjiaDiscardElements);
+      });
+
+      //リーチ
+      if (mainReach == 'chouma') {
+        reachValues[0] = 1;
+      }
+      if (xiajiaReach == 'chouma') {
+        reachValues[1] = 1;
+      }
+      if (duimianReach == 'chouma') {
+        reachValues[2] = 1;
+      }
+      if (shangjiaReach == 'chouma') {
+        reachValues[3] = 1;
+      }
 
       paiElements.forEach((paiElement) => {
         let dataPaiValue = paiElement.getAttribute("data-pai");
@@ -106,12 +172,90 @@ document.addEventListener("DOMContentLoaded", function () {
         dataPaiValues.push(dataPaiValue);
       });
 
+      //ドラ
+      doraElements.forEach((doraElement) => {
+        if (doraElement.getAttribute("data-pai") != "_") {
+          let doraValue = doraElement.getAttribute("data-pai");
+          doraValues.push(doraValue);
+        }
+      });
+
+      var mainScore;
+      var xiajiaScore;
+      var duimianScore;
+      var shangjiaScore;
+      if (main && xiajia && duimian && shangjia != null) {
+        mainScore = main.textContent.trim().split(':')[1].trim().replace(',', '');;
+        xiajiaScore = xiajia.textContent.trim().split(':')[1].trim().replace(',', '');;
+        duimianScore = duimian.textContent.trim().split(':')[1].trim().replace(',', '');;
+        shangjiaScore = shangjia.textContent.trim().split(':')[1].trim().replace(',', '');;
+      }
+
+
       if (dataPaiValues.length == 14) {
-        console.log(dataPaiValues);
-        const data = { dataPai: dataPaiValues };
-        const csrftoken = document.querySelector(
-          "[name=csrfmiddlewaretoken]"
-        ).value;
+        //console.log(dataPaiValues);
+        const data = {
+          dataPai: dataPaiValues,
+          reach: reachValues,
+          dora: doraValues,
+          kaze: bakaze,
+          changbang: changban,
+          lizhibang: lizhiban,
+          naki: [
+            {
+              me: [],
+              right: [],
+              straight: [],
+              left: []
+            }
+          ],
+          discard: [
+            {
+              me: maindiscardValues,
+              right: rightdiscardValues,
+              straight: straightdiscardValues,
+              left: leftdiscardValues
+            }
+          ],
+          score: [
+            {
+              me: mainScore,
+              right: xiajiaScore,
+              straight: duimianScore,
+              left: shangjiaScore
+            }
+          ],
+          tiles: tile
+
+        };
+      console.log(data);
+
+      console.log("----------------------");
+      // const bingpaiElement = document.querySelector(".bingpai");
+      // const paiElements = bingpaiElement.querySelectorAll(".pai");
+      // const dataPaiValues = [];
+
+      // paiElements.forEach((paiElement) => {
+      //   let dataPaiValue = paiElement.getAttribute("data-pai");
+      //   if (dataPaiValue == "m0") {
+      //     dataPaiValue = "m5";
+      //   } else if (dataPaiValue == "p0") {
+      //     dataPaiValue = "p5";
+      //   } else if (dataPaiValue == "s0") {
+      //     dataPaiValue = "s5";
+      //   }
+      //   dataPaiValues.push(dataPaiValue);
+      // });
+
+      // if (dataPaiValues.length == 14) {
+      //   console.log(dataPaiValues);
+      //   const data = { dataPai: dataPaiValues };
+      //   const csrftoken = document.querySelector(
+      //     "[name=csrfmiddlewaretoken]"
+      //   ).value;
+      const csrftoken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
 
         fetch("/agentJS", {
           method: "POST",
@@ -130,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 1000);
   }
+
 
   function createGraph(data) {
     if (data == "a") {
