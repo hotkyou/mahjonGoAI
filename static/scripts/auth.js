@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     const textwrapper = document.getElementById('textwrapper');
+    
     let str = {};
     let count = 0;
     const Itext = "「い」の顔をしてください";
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvas.height = webcam.videoHeight;
 
                 // キャンバスにビデオフレームを描画
-                context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+                context.drawImage(webcam, 0, 0, 1280, 720);
 
                 // キャンバスから画像データを取得
                 canvas.toBlob((blob) => {

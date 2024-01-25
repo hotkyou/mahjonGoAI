@@ -6,4 +6,16 @@ class UserInfo(models.Model):
 
 class MahjongData(models.Model):
     username = models.CharField(max_length=50)
-    
+    matchnumber = models.IntegerField()
+    score = models.IntegerField()
+    rolenumber = models.IntegerField()
+    rolescore = models.IntegerField()
+    sumrank = models.IntegerField()
+    maxcount = models.IntegerField()
+    sumenemyrole = models.IntegerField()
+    summiss =  models.IntegerField()
+
+class History(models.Model):
+    username = models.CharField(max_length=50)
+    rank = models.IntegerField()
+    date = models.DateTimeField()

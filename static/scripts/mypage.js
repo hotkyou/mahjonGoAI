@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   const avgrank = 1;
   const score = 33;
-  const rank = 40;
+  const rank = 72;
   const history = [1, 4, 2, 3, 4, 3, 3, 1, 2, 1]
 
   const ctx = document.getElementById('avgrank');

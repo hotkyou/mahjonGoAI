@@ -86,3 +86,10 @@ def auth(request):
         return JsonResponse({'message': 'OK'})
     else:
         return render(request, 'auth.html')
+
+def adddata(request):
+    if request.method == "POST":
+        
+        return JsonResponse({'message': 'OK'})
+    else:
+        return JsonResponse({'error': 'POSTリクエストのみ受け付けます'}, status=405)
