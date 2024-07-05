@@ -4,10 +4,14 @@ import hashlib
 from django.http import JsonResponse
 from django.shortcuts import render
 from Application.mahjongAI import mahjongAI
+from Application.mahjongAI2 import *
 from .models import UserInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 # from DetectFace import trustycat
+
+RESULT = []
+LASTTEHAI = []
 
 def index(request):
     message = {'user': 'ログイン'}
@@ -15,6 +19,33 @@ def index(request):
         #print(request.session.get('user'))
         message = {'user': request.session.get('user')}
     return render(request, 'index.html', message)
+
+async def mahjongAPI(request):
+    if request.method == 'GET':
+        print(request.GET["mode"])
+        #mode1 = 打牌 mode2 = lasttehai
+        if request.GET["mode"] == "1":
+            #print(RESULT)
+            result = await main([RESULT])
+            #print(result)
+            return JsonResponse(result, safe=False)
+        if request.GET["mode"] == "2":
+            return JsonResponse(LASTTEHAI, safe=False)
+        
+    #jsonファイル作成・保存
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            mahjong = mahjongAI2()
+            #打牌用
+            result = mahjong.jsonCreate(data)
+            LASTTEHAI = data['lasttehai']
+            RESULT.clear()
+            RESULT.extend(result)
+            #print(result)
+            return JsonResponse({'message': 'OK', 'data': result, 'lasttehai': LASTTEHAI})
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': str(e)}, status=400)
 
 def agentJS(request):
     
@@ -32,64 +63,5 @@ def agentJS(request):
             return JsonResponse({'message': 'OK', 'result': result})
         except json.JSONDecodeError as e:
             return JsonResponse({'error': str(e)}, status=400)
-    else:
-        return JsonResponse({'error': 'POSTリクエストのみ受け付けます'}, status=405)
-    
-def login(request):
-    if request.method == 'POST':
-        data = request.POST
-        print(data)
-        message = {'error': ''}
-        if data["username"] == '' or data["password"] == '':
-            print("ユーザー名またはパスワードが入力されていません")
-            message = {'error': 'ユーザー名またはパスワードが入力されていません'}
-            return render(request, 'login.html', message)
-        else:
-            message = {'user': data["username"]}
-            
-            try:
-                instance = UserInfo.objects.get(username=data["username"])
-            except UserInfo.DoesNotExist:
-                hash_sha256 = hashlib.sha256(data["password"].encode()).hexdigest()
-                print(hash_sha256)
-                new_user = UserInfo(username=data["username"], password=hash_sha256)
-                new_user.save()
-                message = {'user': data["username"]}
-                return render(request, 'index.html', message)
-            
-            if instance.password == hashlib.sha256(data["password"].encode()).hexdigest():
-                print("ログイン成功")
-                message = {'user': data["username"]}
-                request.session['user'] = data["username"]
-            else:
-                message = {'error': 'パスワードが間違っていますまたはアカウントが存在しません。'}
-                return render(request, 'login.html', message)
-            
-            return render(request, 'index.html', message)
-    else:
-        print(request.session.get('user'))
-        if request.session.get('user'):
-            return mypage(request)
-        return render(request, 'login.html')
-
-def mypage(request):
-    if request.session.get('user'):
-        return render(request, 'mypage.html')
-    else:
-        return render(request, 'login.html')
-
-@csrf_exempt
-def auth(request):
-    if request.method == "POST":
-        data = request.body
-        
-        return JsonResponse({'message': 'OK'})
-    else:
-        return render(request, 'auth.html')
-
-def adddata(request):
-    if request.method == "POST":
-        
-        return JsonResponse({'message': 'OK'})
     else:
         return JsonResponse({'error': 'POSTリクエストのみ受け付けます'}, status=405)

@@ -2,11 +2,82 @@ document.addEventListener("DOMContentLoaded", function () {
   const startButton = document.querySelector(".start");
   startButton.addEventListener("click", handleStartClick);
 
+  const elements = getElements();
+  const {
+    modal,
+    controlButton,
+    greenButton,
+    yellowButton,
+    redButton,
+    modalImage,
+    charts,
+    rightChart,
+    centerChart,
+    leftChart,
+  } = elements;
+  controlButton.style.display = "block";
+  let modalToggle = false;
+
   function handleStartClick() {
     console.log("start");
     handleShoupaiDisplayed();
   }
 
+  function modalChangeSize() {
+    if (modalToggle) {
+      modalToggle = false;
+      modalContent.style.color = "";
+      modal.style.width = "";
+      modal.style.height = "";
+      modal.style.maxWidth = "";
+      modal.style.top = "";
+      modal.style.left = "";
+      modal.style.position = "";
+      modal.style.backgroundColor = "";
+      charts.style.display = "";
+    } else {
+      modalToggle = true;
+      modalContent.style.color = "white";
+      modal.style.width = "100%";
+      modal.style.height = "100%";
+      modal.style.maxWidth = "80%";
+      modal.style.top = "0";
+      modal.style.left = "0";
+      modal.style.position = "fixed";
+      modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+      charts.style.display = "flex";
+      createGraph("a");
+      createGraph("b");
+      createGraph("c");
+      charts.style.display = "flex";
+    }
+  }
+
+  function getElements() {
+    return {
+      modal: document.getElementById("modal"),
+      controlButton: document.getElementById("controlButton"),
+      greenButton: document.getElementById("greenButton"),
+      yellowButton: document.getElementById("yellowButton"),
+      redButton: document.getElementById("redButton"),
+      modalImage: document.getElementById("modalImage"),
+      charts: document.getElementById("charts"),
+      rightChart: document.getElementById("rightChart"),
+      centerChart: document.getElementById("centerChart"),
+      leftChart: document.getElementById("leftChart"),
+    };
+  }
+
+  function toggleModal() {
+    if (modal.style.display === "block") {
+      modal.style.display = "none";
+      controlButton.textContent = "開く";
+    } else {
+      modalImage.src = "static/images/pai.gif";
+      modal.style.display = "block";
+      controlButton.textContent = "閉じる";
+    }
+  }
 
   function handleShoupaiDisplayed() {
     setInterval(function () {
@@ -165,42 +236,79 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
 
-      const data = {
-        dataPai: dataPaiValues,
-        reach: reachValues,
-        dora: doraValues,
-        kaze: bakaze,
-        mykaze: mykaze,
-        changbang: changban,
-        lizhibang: lizhiban,
-        naki: [
-          {
-            me: mainNakiValues,
-            right: rightNakiValues,
-            straight: straightNakiValues,
-            left: leftNakiValues
-          }
-        ],
-        discard: [
-          {
-            me: maindiscardValues,
-            right: rightdiscardValues,
-            straight: straightdiscardValues,
-            left: leftdiscardValues
-          }
-        ],
-        score: [parseInt(mainScore), parseInt(xiajiaScore), parseInt(duimianScore), parseInt(shangjiaScore)],
-        tiles: tile,
-        lasttehai: dataPaiValues[dataPaiValues.length - 1],
+      //if (dataPaiValues.length == 14) {
+        //console.log(dataPaiValues);
+        const data = {
+          dataPai: dataPaiValues,
+          reach: reachValues,
+          dora: doraValues,
+          kaze: bakaze,
+          mykaze: mykaze,
+          changbang: changban,
+          lizhibang: lizhiban,
+          naki: [
+            {
+              me: mainNakiValues,
+              right: rightNakiValues,
+              straight: straightNakiValues,
+              left: leftNakiValues
+            }
+          ],
+          discard: [
+            {
+              me: maindiscardValues,
+              right: rightdiscardValues,
+              straight: straightdiscardValues,
+              left: leftdiscardValues
+            }
+          ],
+          score: [parseInt(mainScore), parseInt(xiajiaScore), parseInt(duimianScore), parseInt(shangjiaScore)],
+          tiles: tile
 
-      };
-      console.log(dataPaiValues[dataPaiValues.length - 1])
+        };
       console.log(data);
-      console.log("----------------------");
 
+      console.log("----------------------");
+      // const bingpaiElement = document.querySelector(".bingpai");
+      // const paiElements = bingpaiElement.querySelectorAll(".pai");
+      // const dataPaiValues = [];
+
+      // paiElements.forEach((paiElement) => {
+      //   let dataPaiValue = paiElement.getAttribute("data-pai");
+      //   if (dataPaiValue == "m0") {
+      //     dataPaiValue = "m5";
+      //   } else if (dataPaiValue == "p0") {
+      //     dataPaiValue = "p5";
+      //   } else if (dataPaiValue == "s0") {
+      //     dataPaiValue = "s5";
+      //   }
+      //   dataPaiValues.push(dataPaiValue);
+      // });
+
+      // if (dataPaiValues.length == 14) {
+      //   console.log(dataPaiValues);
+      //   const data = { dataPai: dataPaiValues };
+      //   const csrftoken = document.querySelector(
+      //     "[name=csrfmiddlewaretoken]"
+      //   ).value;
       const csrftoken = document.querySelector(
         "[name=csrfmiddlewaretoken]"
       ).value;
+        //agentJS(手牌のAI) //mahjongAPI(json作成)
+        // fetch("/agentJS", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //     "X-CSRFToken": csrftoken,
+        //   },
+        //   body: JSON.stringify(data),
+        // })
+        //   .then((response) => response.json())
+        //   .then((result) => {
+        //     console.log(result);
+        //     modalImage.src = "static/images/" + result.result + ".gif";
+        //   })
+        //   .catch((error) => console.error("リクエスト失敗", error));
 
         fetch("/mahjongAPI", {
           method: "POST",
