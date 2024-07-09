@@ -166,3 +166,16 @@ async def main(data):
     result = await predictor.autoPredict(data)
     #print(result)
     return result
+
+class mahjongKanPredict:
+    def predict(self, data):
+        with open('Application/model/kan.pkl', 'rb') as model_file:
+            self.kanmodel = pickle.load(model_file)
+        return self.kanmodel.predict(data)
+        
+
+def kan(data):
+    mahjong = mahjongKanPredict()
+    result = mahjong.predict(data)
+    print(result)
+    return result[0]

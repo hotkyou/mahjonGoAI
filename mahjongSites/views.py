@@ -1,7 +1,7 @@
 import json
 import hashlib
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from Application.mahjongAI import mahjongAI
 from Application.mahjongAI2 import *
@@ -24,13 +24,14 @@ async def mahjongAPI(request):
     if request.method == 'GET':
         print(request.GET["mode"])
         #mode1 = 打牌 mode2 = lasttehai
-        if request.GET["mode"] == "1":
+        if request.GET["mode"] == "0":
             #print(RESULT)
             result = await main([RESULT])
             #print(result)
             return JsonResponse(result, safe=False)
-        if request.GET["mode"] == "2":
-            return JsonResponse(LASTTEHAI, safe=False)
+        if request.GET["mode"] == "3":
+            result = kan([RESULT])
+            return JsonResponse(result, safe=False)
         
     #jsonファイル作成・保存
     if request.method == 'POST':
