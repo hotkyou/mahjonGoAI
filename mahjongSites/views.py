@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 # from DetectFace import trustycat
 
 RESULT = []
-LASTTEHAI = []
+TEHAI = []
 
 def index(request):
     message = {'user': 'ログイン'}
@@ -22,16 +22,29 @@ def index(request):
 
 async def mahjongAPI(request):
     if request.method == 'GET':
-        print(request.GET["mode"])
+        #print(request.GET["mode"])
         #mode1 = 打牌 mode2 = lasttehai
         if request.GET["mode"] == "0":
             #print(RESULT)
             result = await main([RESULT])
             #print(result)
             return JsonResponse(result, safe=False)
-        if request.GET["mode"] == "3":
+        #ポン
+        elif request.GET["mode"] == "1":
+            result = pon([RESULT])
+            return JsonResponse(result, safe=False)
+        #チー
+        elif request.GET["mode"] == "2":
+            pass
+            return JsonResponse(result, safe=False)
+        #カン
+        elif request.GET["mode"] == "3":
             result = kan([RESULT])
             return JsonResponse(result, safe=False)
+        elif request.GET["mode"] == "4":
+            global TEHAI
+            #print(TEHAI)
+            return JsonResponse(TEHAI, safe=False)
         
     #jsonファイル作成・保存
     if request.method == 'POST':
@@ -40,11 +53,11 @@ async def mahjongAPI(request):
             mahjong = mahjongAI2()
             #打牌用
             result = mahjong.jsonCreate(data)
-            LASTTEHAI = data['lasttehai']
+            TEHAI = data['dataPai']
             RESULT.clear()
             RESULT.extend(result)
             #print(result)
-            return JsonResponse({'message': 'OK', 'data': result, 'lasttehai': LASTTEHAI})
+            return JsonResponse({'message': 'OK', 'data': result})
         except json.JSONDecodeError as e:
             return JsonResponse({'error': str(e)}, status=400)
 

@@ -191,10 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ],
         score: [parseInt(mainScore), parseInt(xiajiaScore), parseInt(duimianScore), parseInt(shangjiaScore)],
         tiles: tile,
-        lasttehai: dataPaiValues[dataPaiValues.length - 1],
 
       };
-      console.log(dataPaiValues[dataPaiValues.length - 1])
       console.log(data);
       console.log("----------------------");
 

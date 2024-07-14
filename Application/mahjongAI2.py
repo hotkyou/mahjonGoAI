@@ -37,7 +37,7 @@ class mahjongAI2:
                 counts[self.all.index(item)] += 1
 
     def process_wind(self, wind):
-        print(wind)
+        #print(wind)
         wind_mapping = {"東": 0, "南": 1, "西": 2, "北": 3}
         if wind[0] not in wind_mapping:
             print(wind[0])
@@ -105,21 +105,25 @@ class mahjongAI2:
 class mahjongPredict:
     def __init__(self):
         self.data = []
-        self.mahjong = ["一萬", "二萬", "三萬", "四萬", "五萬", "六萬", "七萬", "八萬", "九萬", "赤五萬",
-                        "一筒", "二筒", "三筒", "四筒", "五筒", "六筒", "七筒", "八筒", "九筒", "赤五筒",
-                        "一索", "二索", "三索", "四索", "五索", "六索", "七索", "八索", "九索", "赤五索",
-                        "東", "南", "西", "北", "白", "發", "中"]
+        # self.mahjong = ["一萬", "二萬", "三萬", "四萬", "五萬", "六萬", "七萬", "八萬", "九萬", "赤五萬",
+        #                 "一筒", "二筒", "三筒", "四筒", "五筒", "六筒", "七筒", "八筒", "九筒", "赤五筒",
+        #                 "一索", "二索", "三索", "四索", "五索", "六索", "七索", "八索", "九索", "赤五索",
+        #                 "東", "南", "西", "北", "白", "發", "中"]
+        self.mahjong = ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "m0",
+                        "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p0",
+                        "s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s0",
+                        "z1", "z2", "z3", "z4", "z5", "z6", "z7"]
     
     async def autoPredict(self, data):
         result = await predictions(data)
-        print(result[0])
+        #print(result[0])
         probabilities = np.array(result)
         #print(probabilities)
         percentages = probabilities * 100
         
         #打牌用
         for i, percent in enumerate(percentages[0]):
-            self.data.append({"name": self.mahjong[i], "population": float(f"{percent:.6f}")})
+            self.data.append({"name": self.mahjong[i], "population": float(f"{percent:.1f}")})
         
         return self.data
 
@@ -157,7 +161,7 @@ async def predictions(data):
     mean_predictions = np.mean(alldata, axis=0)
     normalized_predictions = mean_predictions / np.sum(mean_predictions)
     output_sum = np.sum(normalized_predictions)
-    print(output_sum)
+    #print(output_sum)
     return normalized_predictions
 
 # Example usage
@@ -177,5 +181,17 @@ class mahjongKanPredict:
 def kan(data):
     mahjong = mahjongKanPredict()
     result = mahjong.predict(data)
-    print(result)
+    #print(result)
+    return result[0]
+
+class mahjongPonPredict:
+    def predict(self, data):
+        with open('Application/model/pon.pkl', 'rb') as model_file:
+            self.ponmodel = pickle.load(model_file)
+        return self.ponmodel.predict(data)
+
+def pon(data):
+    mahjong = mahjongPonPredict()
+    result = mahjong.predict(data)
+    #print(result)
     return result[0]
