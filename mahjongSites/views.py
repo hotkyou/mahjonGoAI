@@ -35,13 +35,18 @@ async def mahjongAPI(request):
             return JsonResponse(result, safe=False)
         #チー
         elif request.GET["mode"] == "2":
-            pass
-            return JsonResponse(result, safe=False)
+            result = chi([RESULT])
+            return JsonResponse(result[:-1].tolist(), safe=False)
         #カン
         elif request.GET["mode"] == "3":
             result = kan([RESULT])
+            #print(result)
             return JsonResponse(result, safe=False)
         elif request.GET["mode"] == "4":
+            result = reach([RESULT])
+            #print(result[0][:-1].tolist())
+            return JsonResponse(result[0][:-1].tolist(), safe=False)
+        elif request.GET["mode"] == "5":
             global TEHAI
             #print(TEHAI)
             return JsonResponse(TEHAI, safe=False)

@@ -195,3 +195,27 @@ def pon(data):
     result = mahjong.predict(data)
     #print(result)
     return result[0]
+
+class mahjongReachPredict:
+    def predict(self, data):
+        with open('Application/model/reach.pkl', 'rb') as model_file:
+            self.reachmodel = pickle.load(model_file)
+        return self.reachmodel.predict(data)
+
+def reach(data):
+    mahjong = mahjongReachPredict()
+    result = mahjong.predict(data)
+    #print(result)
+    return result
+
+class mahjongChiPredict:
+    def predict(self, data):
+        with open('Application/model/chii.pkl', 'rb') as model_file:
+            self.chimodel = pickle.load(model_file)
+        return self.chimodel.predict(data)
+    
+def chi(data):
+    mahjong = mahjongChiPredict()
+    result = mahjong.predict(data)
+    #print(result)
+    return result[0]
