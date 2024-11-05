@@ -1,3 +1,4 @@
+import PickTiles from "./PickTiles";
 document.addEventListener("DOMContentLoaded", function () {
   const startButton = document.querySelector(".start");
   startButton.addEventListener("click", handleStartClick);
@@ -7,9 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
     handleShoupaiDisplayed();
   }
 
-
+  
   function handleShoupaiDisplayed() {
-    setInterval(function () {
+    setInterval(function () {      
 
       const bingpaiElement = document.querySelector(".bingpai");
       const paiElements = bingpaiElement.querySelectorAll(".pai");
@@ -200,21 +201,24 @@ document.addEventListener("DOMContentLoaded", function () {
         "[name=csrfmiddlewaretoken]"
       ).value;
 
-        fetch("/mahjongAPI", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-          body: JSON.stringify(data),
+      fetch("/getLightgbmResult", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) =>
+          response.json())
+        .then((result) => {
+          console.log("リクエ",result);
+          print("------------------------------" ,result)
         })
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-          })
-          .catch((error) => console.error("リクエスト失敗", error));
+        .catch((error) => console.error("リクエスト失敗", error));
+      //自動打牌
+        PickTiles(data)
       }
-    //}
     ,1000);
   }
 });

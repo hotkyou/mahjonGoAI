@@ -65,6 +65,21 @@ async def mahjongAPI(request):
             return JsonResponse({'message': 'OK', 'data': result})
         except json.JSONDecodeError as e:
             return JsonResponse({'error': str(e)}, status=400)
+        
+def getLightgbmResult(request):
+    if request.method == "POST":
+        # json形式のデータを取得
+        data = json.loads(request.body)
+        print(data)
+        mahjong = mahjongAI2()
+        # jsonから１つの配列に変換
+        result = mahjong.jsonCreate(data)
+        # 1つの配列をもとにaiでPREDICT
+        predict = main([result])
+        
+        print("=============================")
+        print(predict)
+        return JsonResponse(result, safe=False)
 
 def agentJS(request):
     

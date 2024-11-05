@@ -168,7 +168,8 @@ async def predictions(data):
 async def main(data):
     predictor = mahjongPredict()
     result = await predictor.autoPredict(data)
-    #print(result)
+    print("aaaaaaa")
+    print(result)
     return result
 
 class mahjongKanPredict:

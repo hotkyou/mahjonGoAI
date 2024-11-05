@@ -5,4 +5,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('agentJS', views.agentJS, name='agentJS'),
     path('mahjongAPI', views.mahjongAPI, name='mahjongAPI'),
+    path('getLightgbmResult', views.getLightgbmResult, name='getLightgbmResult'),
+
 ]
